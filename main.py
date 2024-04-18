@@ -18,10 +18,15 @@ def leer_archivo():
     with open('archivo6.txt', 'r') as archivo:
         # Itera sobre cada línea del archivo
         print("Leyendo el archivo:", archivo.name)
-        for linea in archivo:
+        for a, linea in enumerate(archivo):
             # aqui estan
             palabras = linea.split(' ')
-            print(palabras)
+            x = search_tree.search(palabras[a])
+            if x is None:
+                crear_diccionario(palabras[a], archivo.name, 1)
+                print(palabras)
+            else:
+                ingresar_en_palabra_repetida(archivo.name, 1, x)
 
 
 while True:
