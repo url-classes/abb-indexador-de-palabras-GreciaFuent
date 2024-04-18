@@ -1,3 +1,18 @@
+from binary_search_tree import BinarySearchTree
+search_tree = BinarySearchTree()
+
+
+def crear_diccionario(palabra, ubicacion, repeticion):
+    palabra = {"palabra": palabra,
+               "ubicacion": [ubicacion],
+               "repeticiones": [repeticion]}
+
+
+def ingresar_en_palabra_repetida(ubicacion, repeticion, node):
+    node["ubicacion"].append(ubicacion)
+    node["repeticion"].append(repeticion)
+
+    
 def leer_archivo():
     # Abre el archivo en modo lectura
     with open('archivo6.txt', 'r') as archivo:
@@ -21,3 +36,6 @@ while True:
         break
     else:
         raise ReferenceError('No existe esta opcion')
+
+
+
