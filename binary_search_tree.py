@@ -6,7 +6,7 @@ T = TypeVar("T")
 class BinarySearchTree(Generic[T]):
 
     def __init__(self):
-        self.__root: Node | None = None
+        self.root: Node | None = None
 
     def __preorder(self, subtree: Node | None) -> str:
         if subtree is None:
@@ -18,30 +18,30 @@ class BinarySearchTree(Generic[T]):
             result = f"{root} ({left}, {right})"
             return result
 
-    def __search(self, ref: T, subtree: Node | None, path: str = "") -> str:
+    def __search(self, ref: T, subtree: Node | None, path: str = ""):
         if subtree is None:
-            return "None"
+            return None
         else:
-            root = subtree.data
-            if ref < root:
+            root = subtree.data["palabra"]
+            if len(ref) < len(root):
                 return self.__search(ref, subtree.left, path + "->" + str(root))
-            elif ref > root:
+            elif len(ref) > len(root):
                 return self.__search(ref, subtree.right, path + "->" + str(root))
             elif ref == root:
-                return path + "->" + str(root)
+                return subtree
 
     def preorder(self):
-        return self.__preorder(self.__root)
+        return self.__preorder(self.root)
 
     def __insert(self, data: T, subtree: Node[T]):
-        if data < subtree.data:
+        if len(data["palabra"]) < len(subtree.data["palabra"]):
             left = subtree.left
             if left is None:
                 new_node = Node(data)
                 subtree.left = new_node
             else:
                 self.__insert(data, left)
-        elif data > subtree.data:
+        elif len(data["palabra"]) > len(subtree.data["palabra"]):
             right = subtree.right
             if right is None:
                 new_node = Node(data)
@@ -50,13 +50,14 @@ class BinarySearchTree(Generic[T]):
                 self.__insert(data, right)
 
     def insert(self, data: T):
-        if self.__root is None:
-            self.__root = Node(data)
+        if self.root is None:
+            self.root = Node(data)
         else:
-            self.__insert(data, self.__root)
+            print("Entre aqui")
+            self.__insert(data, self.root)
 
     def search(self, ref: T):
-        return self.__search(ref, self.__root)
+        return self.__search(ref, self.root)
 
     def __delete(self, data: T, subtree: Node | None, father: Node | None) -> Node | None:
         if subtree is None:
@@ -91,7 +92,7 @@ class BinarySearchTree(Generic[T]):
                         elif child.data > father.data:
                             father.right = child
                     else:
-                        self.__root = child
+                        self.root = child
                     child.left = subtree.left
                     subtree.left = None
                     child.right = subtree.right
@@ -124,7 +125,7 @@ class BinarySearchTree(Generic[T]):
             return self.__delete(data, subtree.right, subtree)
 
     def delete(self, data: T) -> Node:
-        return self.__delete(data, self.__root, None)
+        return self.__delete(data, self.root, None)
 
     def __min(self, subtree: Node | None) -> Node | None:
         if subtree is not None:
@@ -145,8 +146,8 @@ class BinarySearchTree(Generic[T]):
             return None
 
     def min(self):
-        return self.__min(self.__root)
+        return self.__min(self.root)
         # mas a la izquierda
 
     def max(self):
-        return self.__max(self.__root)
+        return self.__max(self.root)
