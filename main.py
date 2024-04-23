@@ -42,7 +42,7 @@ while True:
     if menu == 1:
         print('Buscar palabra')
         leer_archivo()
-        print("root", search_tree.root.left)
+        print("root", search_tree.root.left.right)
     elif menu == 2:
         print('Esperamos que te haya gustado el sistema')
         break

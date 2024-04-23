@@ -23,9 +23,9 @@ class BinarySearchTree(Generic[T]):
             return None
         else:
             root = subtree.data["palabra"]
-            if len(ref) < len(root):
+            if ref[0] < root[0]:
                 return self.__search(ref, subtree.left, path + "->" + str(root))
-            elif len(ref) > len(root):
+            elif ref[0] > root[0]:
                 return self.__search(ref, subtree.right, path + "->" + str(root))
             elif ref == root:
                 return subtree
@@ -34,14 +34,14 @@ class BinarySearchTree(Generic[T]):
         return self.__preorder(self.root)
 
     def __insert(self, data: T, subtree: Node[T]):
-        if len(data["palabra"]) < len(subtree.data["palabra"]):
+        if data["palabra"][0] < subtree.data["palabra"][0]:
             left = subtree.left
             if left is None:
                 new_node = Node(data)
                 subtree.left = new_node
             else:
                 self.__insert(data, left)
-        elif len(data["palabra"]) > len(subtree.data["palabra"]):
+        elif data["palabra"][0] > subtree.data["palabra"][0]:
             right = subtree.right
             if right is None:
                 new_node = Node(data)
@@ -53,7 +53,6 @@ class BinarySearchTree(Generic[T]):
         if self.root is None:
             self.root = Node(data)
         else:
-            print("Entre aqui")
             self.__insert(data, self.root)
 
     def search(self, ref: T):
