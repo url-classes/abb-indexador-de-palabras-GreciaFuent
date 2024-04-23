@@ -1,6 +1,8 @@
 from binary_search_tree import BinarySearchTree
 search_tree = BinarySearchTree()
 
+verificacion_entro = False
+
 
 def crear_diccionario(palabra, ubicacion, repeticion):
     palabra = {"palabra": palabra,
@@ -10,19 +12,23 @@ def crear_diccionario(palabra, ubicacion, repeticion):
 
 
 def ingresar_en_palabra_repetida(ubicacion, repeticion, node):
-    for ubi in node.data["ubicacion"]:
-        if ubi == ubicacion:
-            node.data["repeticion"][0] += 1
-        else:
-            node.data["ubicacion"].append(ubicacion)
-            node.data["repeticion"].append(repeticion)
+    global verificacion_entro
+    for i, ubi in enumerate(node.data["ubicacion"]):
+        if ubi is ubicacion:
+            node.data["repeticion"][i] += 1
+            verificacion_entro = True
+
+    if verificacion_entro is False:
+        node.data["ubicacion"].append(ubicacion)
+        node.data["repeticion"].append(repeticion)
+    else:
+        verificacion_entro = False
 
 
-def leer_archivo():
+def leer_archivo(nombre_archivo):
     # Abre el archivo en modo lectura
-    with open('text5.txt', 'r') as archivo:
+    with open(nombre_archivo, 'r') as archivo:
         # Itera sobre cada línea del archivo
-        print("Leyendo el archivo:", archivo.name)
         for a, linea in enumerate(archivo):
             # aqui estan
             palabras = linea.split(' ')
@@ -30,9 +36,21 @@ def leer_archivo():
                 x = search_tree.search(palabras[b])
                 if x is None:
                     crear_diccionario(palabras[b], archivo.name, 1)
-                    print(palabras)
+                    # Si desea ver las oraciones print(palabras) descomente el print
                 else:
                     ingresar_en_palabra_repetida(archivo.name, 1, x)
+
+
+leer_archivo("text1.txt")
+leer_archivo("text2.txt")
+leer_archivo("text3.txt")
+leer_archivo("text4.txt")
+leer_archivo("text5.txt")
+leer_archivo("archivo6.txt")
+leer_archivo("archivo7.txt")
+leer_archivo("archivo8.txt")
+leer_archivo("archivo9.txt")
+leer_archivo("archivo10.txt")
 
 
 while True:
@@ -41,12 +59,13 @@ while True:
                      'Indique que opcion utilizara: '))
     if menu == 1:
         print('Buscar palabra')
-        leer_archivo()
-        print("root", search_tree.root.left.right)
+        palabra_buscar = input('Ingrese la palabra que desea buscar: ')
+        print(palabra_buscar, search_tree.search(palabra_buscar))
     elif menu == 2:
         print('Esperamos que te haya gustado el sistema')
         break
     else:
         raise ReferenceError('No existe esta opcion')
+
 
 
