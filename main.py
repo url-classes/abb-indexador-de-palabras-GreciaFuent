@@ -35,7 +35,6 @@ def leer_archivo():
                     ingresar_en_palabra_repetida(archivo.name, 1, x)
 
 
-
 while True:
     menu = int(input('Ingrese la opcion que desea: \n'
                      '1) Buscar palabra\n2) Terminar el programa\n'
